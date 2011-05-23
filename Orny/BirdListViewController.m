@@ -11,6 +11,8 @@
 
 @implementation BirdListViewController
 
+@synthesize birds;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -20,8 +22,13 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [self loadBirdData];
+}
+
 - (void)dealloc
 {
+    [birds release];
     [super dealloc];
 }
 
@@ -52,6 +59,47 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark UITableViewDataSource methods
+
+-(void)loadBirdData {
+    birds = [[NSMutableArray alloc] init];
+    
+    // Add a Magpie to our bird array
+    [birds addObject:
+     [NSDictionary 
+      dictionaryWithObjects:[NSArray arrayWithObjects:@"Magpie", @"magpie.jpg", @"Black and white and crafty all over!", nil]
+      forKeys:[NSArray arrayWithObjects:@"name", @"image", @"description", nil]
+      ]
+     ];
+    
+    // And another!
+    [birds addObject:
+     [NSDictionary dictionaryWithObjects:
+      [NSArray arrayWithObjects:@"Rosella", @"rosella.jpg", @"A red and blue parrot", nil] 
+                                 forKeys:[NSArray arrayWithObjects:@"name", @"image", @"description", nil]
+      ]
+     ];     
+}
+
+- (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
+    return [birds count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *newCell = [[[UITableViewCell alloc] init] autorelease];
+    NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    
+    UILabel *newCellLabel = [newCell textLabel];
+    [newCellLabel setText:[thisBird objectForKey:@"name"]];
+    
+    return newCell;
+}
+
+// fixed font style. use custom view (UILabel) if you want something different
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Some Birds";
 }
 
 @end

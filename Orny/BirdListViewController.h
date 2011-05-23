@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
-@interface BirdListViewController : UIViewController {
+@interface BirdListViewController : UIViewController <UITableViewDataSource> {
     
 }
+
+- (void)loadBirdData;
+
+@property (nonatomic, retain) NSMutableArray *birds;
 
 @end
