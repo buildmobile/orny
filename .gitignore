@@ -1,4 +1,3 @@
-.gitignore
 Orny.xcodeproj/*
-
+.DS_Store
 
