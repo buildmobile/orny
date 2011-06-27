@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BirdListDetailViewController.h"
 
-
-@interface BirdListViewController : UIViewController <UITableViewDataSource> {
+@interface BirdListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     
 }
 
 - (void)loadBirdData;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @property (nonatomic, retain) NSMutableArray *birds;
 

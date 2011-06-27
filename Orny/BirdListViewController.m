@@ -63,13 +63,17 @@
 
 #pragma mark UITableViewDataSource methods
 
+/**
+ * Create a data structure containing information about some birds.
+ * Eventually, we'll replace this with some CoreData interaction.
+ */
 -(void)loadBirdData {
     birds = [[NSMutableArray alloc] init];
     
     // Add a Magpie to our bird array
     [birds addObject:
      [NSDictionary 
-      dictionaryWithObjects:[NSArray arrayWithObjects:@"Magpie", @"magpie.jpg", @"Black and white and crafty all over!", nil]
+      dictionaryWithObjects:[NSArray arrayWithObjects:@"Magpie", @"magpie", @"Black and white and crafty all over!", nil]
       forKeys:[NSArray arrayWithObjects:@"name", @"image", @"description", nil]
       ]
      ];
@@ -77,18 +81,32 @@
     // And another!
     [birds addObject:
      [NSDictionary dictionaryWithObjects:
-      [NSArray arrayWithObjects:@"Rosella", @"rosella.jpg", @"A red and blue parrot", nil] 
+      [NSArray arrayWithObjects:@"Rosella", @"rosella", @"A red and blue parrot", nil] 
                                  forKeys:[NSArray arrayWithObjects:@"name", @"image", @"description", nil]
       ]
      ];     
 }
 
+/**
+ * Return the number of rows for this section. We only have one section, so it's the count
+ * of birds.
+ */
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
     return [birds count];
 }
 
+/**
+ * Return a cell for a given path. The path tells us which row we're interacting with (and thus which
+ * element in our ordered data structure of birds - and thus, indirectly, which bird).
+ */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *newCell = [[[UITableViewCell alloc] init] autorelease];
+    
+    UITableViewCell *newCell;
+    
+    if((newCell = [tableView dequeueReusableCellWithIdentifier:@"birdList"]) == nil) {
+        newCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"birdList"] autorelease];
+    }
+    
     NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
     
     UILabel *newCellLabel = [newCell textLabel];
@@ -97,9 +115,29 @@
     return newCell;
 }
 
-// fixed font style. use custom view (UILabel) if you want something different
+/**
+ * Depending on the style of table, we might show a header. 
+ */
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"Some Birds";
+}
+
+/**
+ * The user has selected a row. Respond to that.
+ */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    
+    BirdListDetailViewController *detail = [[BirdListDetailViewController alloc] initWithNibName:@"BirdListDetailViewController" bundle:[NSBundle mainBundle]];
+    detail.filename = [thisBird objectForKey:@"image"];
+
+    [[self navigationController] pushViewController:detail animated:YES];
+    
+    [detail release];
+    
 }
 
 @end
