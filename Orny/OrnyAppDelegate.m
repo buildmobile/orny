@@ -142,15 +142,23 @@
     {
         return __persistentStoreCoordinator;
     }
+    //[[self applicationDocumentsDirectory] stringByAppendingPathComponent:];
     
-    NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:@"Orny.sqlite"];
-    NSURL *storeURL = [NSURL fileURLWithPath:storePath];
+        
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Orny.sqlite"];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if(![fileManager fileExistsAtPath:storePath]) {
+    if(![fileManager fileExistsAtPath:[storeURL path]]) {
+        
         NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"Orny_default" ofType:@"sqlite"];
         if (defaultStorePath) {
-            [fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
+            NSLog(@"COPYING!!!!!!!!!!");
+            NSLog(@"%@", [storeURL relativeString]);
+            NSLog(@"%@", defaultStorePath);
+            NSError *error;
+            if(![fileManager copyItemAtPath:defaultStorePath toPath:[storeURL path] error:&error]) {
+                NSLog(@"FILE COPY ERROR: %@", [error localizedDescription]);
+            }
         }
     }
     
