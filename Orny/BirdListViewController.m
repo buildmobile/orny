@@ -96,6 +96,10 @@
 
     birds = fetchController.fetchedObjects;
     
+    // Adding a saveContext call, to generate an empty sqlite db
+    [(OrnyAppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+    
+    
     /*
     birds = [[NSMutableArray alloc] init];
     
