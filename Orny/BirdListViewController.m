@@ -93,7 +93,9 @@
         abort();
     }
 
+    birds = fetchController.fetchedObjects;
     
+    /*
     birds = [[NSMutableArray alloc] init];
     
     // Add a Magpie to our bird array
@@ -111,6 +113,7 @@
                                  forKeys:[NSArray arrayWithObjects:@"name", @"image", @"description", nil]
       ]
      ];     
+     */
 }
 
 /**
