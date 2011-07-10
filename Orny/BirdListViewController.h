@@ -17,6 +17,6 @@
 - (void)loadBirdData;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 
-@property (nonatomic, retain) NSMutableArray *birds;
+@property (nonatomic, retain) NSArray *birds;
 
 @end
