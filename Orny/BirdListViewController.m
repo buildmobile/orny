@@ -68,6 +68,11 @@
  * Eventually, we'll replace this with some CoreData interaction.
  */
 -(void)loadBirdData {
+    
+    NSManagedObjectContext *context = [(OrnyAppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    
+    
     birds = [[NSMutableArray alloc] init];
     
     // Add a Magpie to our bird array
