@@ -69,9 +69,30 @@
  */
 -(void)loadBirdData {
     
+    // The context is, roughly, the "database schema"
     NSManagedObjectContext *context = [(OrnyAppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
+    // A request is like an SQL select statement; we're retrieving some set of objects
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+
+    // An entity description is used to specify which entit(y|ies) we want to pull from the context
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"Species" inManagedObjectContext:context];
     
+    // A sort descriptor lets us order the results
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+
+    // A fetchedResultsController handles the fetching of our data
+    NSFetchedResultsController *fetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    
+    fetchController.delegate = self;
+
+    NSError *error = nil;
+    if(![fetchController performFetch:&error]) {
+        // TODO: Handle error
+        abort();
+    }
+
     
     birds = [[NSMutableArray alloc] init];
     
