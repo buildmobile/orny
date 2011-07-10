@@ -10,7 +10,7 @@
 #import "BirdListDetailViewController.h"
 #import "OrnyAppDelegate.h"
 
-@interface BirdListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface BirdListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     
 }
 
