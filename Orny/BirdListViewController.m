@@ -77,9 +77,10 @@
 
     // An entity description is used to specify which entit(y|ies) we want to pull from the context
     NSEntityDescription *description = [NSEntityDescription entityForName:@"Species" inManagedObjectContext:context];
+    [request setEntity:description];
     
     // A sort descriptor lets us order the results
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 
     // A fetchedResultsController handles the fetching of our data
