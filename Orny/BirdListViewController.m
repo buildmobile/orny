@@ -138,10 +138,12 @@
         newCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"birdList"] autorelease];
     }
     
-    NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    //NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    Species *thisBird = [birds objectAtIndex:[indexPath row]];
     
     UILabel *newCellLabel = [newCell textLabel];
-    [newCellLabel setText:[thisBird objectForKey:@"name"]];
+    //[newCellLabel setText:[thisBird objectForKey:@"name"]];
+    [newCellLabel setText:thisBird.name];
     
     return newCell;
 }
@@ -160,10 +162,13 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    //NSDictionary *thisBird = [birds objectAtIndex:[indexPath row]];
+    Species *bird = [birds objectAtIndex:[indexPath row]];
     
     BirdListDetailViewController *detail = [[BirdListDetailViewController alloc] initWithNibName:@"BirdListDetailViewController" bundle:[NSBundle mainBundle]];
-    detail.filename = [thisBird objectForKey:@"image"];
+    
+    //detail.filename = [thisBird objectForKey:@"image"];
+    detail.filename = bird.filename;
 
     [[self navigationController] pushViewController:detail animated:YES];
     

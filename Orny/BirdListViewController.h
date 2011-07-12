@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BirdListDetailViewController.h"
 #import "OrnyAppDelegate.h"
+#import "Species.h"
 
 @interface BirdListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate> {
     
